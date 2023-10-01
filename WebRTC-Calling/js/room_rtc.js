@@ -6,6 +6,9 @@ if(!uid){
     sessionStorage.setItem('uid', uid)
 }
 
+let participantCount = 0;
+
+
 let token = null;
 let client;
 
@@ -55,6 +58,14 @@ let joinRoomInit = async () => {
 }
 
 let joinStream = async () => {
+
+    if (participantCount >= 50) {
+        alert("Maximum number of participants reached.");
+        return;
+    }
+
+    participantCount++;
+
     document.getElementById('join-btn').style.display = 'none'
     document.getElementsByClassName('stream__actions')[0].style.display = 'flex'
 
@@ -215,8 +226,10 @@ let toggleScreen = async (e) => {
 }
 
 let leaveStream = async (e) => {
-    e.preventDefault()
 
+    e.preventDefault();
+    participantCount--;
+    
     document.getElementById('join-btn').style.display = 'block'
     document.getElementsByClassName('stream__actions')[0].style.display = 'none'
 
